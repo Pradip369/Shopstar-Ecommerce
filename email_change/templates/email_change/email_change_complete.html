@@ -1,0 +1,27 @@
+{% extends "email_change/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Email change complete" %}{% endblock %}
+
+{% block breadcrumbs-box %}
+    {{ block.super }} &rsaquo; {% trans "Notice" %}
+{% endblock %}
+
+{% block coltype %}login{% endblock %}
+
+{% block content_title %}
+    <h1>{% trans "Email change complete" %}</h1>
+{% endblock %}
+
+{% block content %}
+<h5 class="text-center alert alert-success text-success text-weight-bold border-danger">{% trans "Your email address has been changed successfully!!!" %}</h5>
+
+    <div id="content-main" class="alert alert-warning m-3 border-warning">
+        <p class="text-dark">{% trans "Your new email address is:" %}
+            <strong class="text-danger text-weight-bold">{{ user.email }}</strong>
+        </p>
+        <p>&laquo; <a href="{% url 'my_profile' request.user.profile.id %}" class="btn btn-success btn-sm">{% trans "Back to your profile" %}</a></p>
+    </div>
+{% endblock %}
+
+

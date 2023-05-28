@@ -1,0 +1,28 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Account Activated" %}{% endblock %}
+
+{% block content %}
+<div class="pt-1 mt-1">
+<h3 class="alert alert-success text-center text-weight-bold">
+<img class="varified__gif" src="/static/images/success1.gif" alt="varified" />
+    {% trans "Your account is now activated." %}
+    {% if not user.is_authenticated %}
+    {% endif %}
+</h3>
+<center><h6>Go to </h6><a href="/my_profile/{{request.user.profile.id}}/" class="btn btn-success btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> My Profile</a>
+<a href="/" class="btn btn-primary btn-sm"><i class="fa fa-home" aria-hidden="true"></i> Home</a></center>
+
+</div><br><br><br>
+{% endblock %}
+
+
+{% comment %}
+
+**registration/activation_complete.html**
+
+Used after successful account activation. This template has no context
+variables of its own, and should simply inform the user that their
+account is now active.
+{% endcomment %}

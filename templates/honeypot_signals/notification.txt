@@ -1,0 +1,19 @@
+{% load i18n %}
+{% blocktrans with site_name=site.name %}
+{% endblocktrans %}
+
+Invalid login attempt from your duplicate ADMIN panel..
+• Review entry at http://{{ site.domain }}{% url "admin:admin_honeypot_loginattempt_change" object.id %} 
+
+Username: {{ object.username }}
+IP: {{ object.ip_address }}
+Timestamp: {{ object.timestamp }}
+
+• 🚫🚫🚫This is a critical situation.Please protect your site from hackers..🚫🚫🚫
+
+🟢Security tips🟢
+
+1). Please Block This IP(go to blacklist in your admin panel) Address to prevent your database hack❗.
+2). Go to your web hosting service..and select your hosted site and put the site into under construction for few hours..
+3). contact your site's maker(developer).
+4). If you sure your site is secure then you can disable the site under construction..

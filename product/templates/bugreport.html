@@ -1,0 +1,31 @@
+{% extends "./base.html" %}
+{% block title %}Bug Report{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<main class="pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+
+                <form method="POST" novalidate class="form-control bug_form">
+                    <h5 class="text-weight-bold py-1  text-center text-dark "><i class="fa fa-bug text-danger"
+                            aria-hidden="true"></i> Bug Report</h5>
+                    <hr>
+                    {{form | crispy}}
+                    {% csrf_token %}
+
+                    <div class="text-center mt-1">
+                        <input type="submit" class="btn btn-primary btn-sm mr-3 px-3" value="Submit" />
+                        <a href="/" class="px-4 btn btn-danger btn-sm">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<br><br>
+
+{% endblock %}

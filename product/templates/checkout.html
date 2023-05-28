@@ -1,0 +1,144 @@
+{% extends "./base.html" %}
+
+{% block title %}checkout{% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages%}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong class="text-dark"> {{message}} </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{% endfor %}
+{% endif %}
+
+
+{% if order.get_total_item == 0 %}
+<center class="mt-3">
+    <h4 class="text-danger">No any items!!!</h4>
+
+    <i class="fa fa-shopping-basket fa-1x text-info" aria-hidden="true"></i>
+    <i class="fa fa-shopping-basket fa-1x text-warning" aria-hidden="true"></i>
+    <i class="fa fa-shopping-basket fa-1x text-success" aria-hidden="true"></i>
+</center>
+{% else %}
+<hr/>
+<center><h4>Order Summary</h4></center>
+<hr/>
+<div class="container-fluid checkout__table">                  
+<table class="table table-hover border-warning">
+    <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Image</th>
+            <th scope="col">Item</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+
+    {% for item in items %}
+    <tbody>
+        <tr>
+            <th>{{forloop.counter}}</th>
+            <th><a href="{% url 'product_detail' item.product.id item.product.slug_product %}"><img class="row-image" src="{{item.product.image.url}}"></a></th>
+            <td class="w-25">{{item.product.product_name | truncatewords:12}}</td>
+            <td>{{item.product.price}} x {{item.quantity}}</td>
+            <td> $ {{item.get_total}}</td>
+        </tr>
+    </tbody>
+    {% endfor %}
+
+</table>
+<div class="checkout__total">
+<p class="text-dark mr-4">Total Items : <b class="px-1 alert-warning text-dark rounded">{{order.get_total_item}}</b></p>
+</div>
+<dev class="row">
+        <p class="text-dark">Sub Total : <b class="px-1 text-dark alert-light rounded">$ {{order.get_total_price}}(USD)</b></p>
+        <div class="col-6">
+            <p>Delivery Charge :  <span class="px-1 alert-dark font-weight-bold text-dark rounded" id = "delivery_charg"> --></span> </p>
+        </div>
+        <div class="col-6">
+            {% load countries %}
+            {% get_countries as countries %}
+            <select id = "country_select" onchange="countrysel()" class="w-100" style="background-color: rgb(195, 214, 221);">
+                <option value="none" selected disabled hidden>
+                    Select Country
+                </option>
+                {% for country in countries %}
+                    <option value="{{ country.name }}">{{ country.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </dev>
+    <p>Total Payable Amount : <span id = "payable_amount" class="px-1 alert-danger font-weight-bold text-dark rounded">Select Country</span></p>
+</div>
+
+<br/>
+<a class="m-3 btn btn-sm btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+<a class="btn btn-sm border disabled" href='#shipping__address' id="shipping__button">Fill Shipping Information</a>
+
+<div class="hidden" id="shipping__address">
+<hr/>
+<center>
+    <h4>Shipping Address</h4>
+</center>
+<hr />
+
+<div class="container mt-3 checkout__address col-md-6">
+<form action="" method="POST" novalidate>
+    <br>
+    {% csrf_token %}
+    <div>{{fm | crispy}}</div>
+    <br/>
+    <input type="submit" class="btn-block btn-warning border-dark font-weight-bold btn" value="Continue To Pay">
+    <br/>
+</form>
+</div>
+<br><br>
+</div>
+
+{% endif %}
+
+
+{% block script %}
+
+<script>
+var sb = document.getElementById('shipping__button')
+sb.addEventListener('click',function(){
+    document.getElementById('shipping__button').classList.add('hidden')
+    document.getElementById('shipping__address').classList.remove('hidden')
+});
+</script>
+
+<script type="text/javascript">
+
+    function countrysel() {
+        var x = document.getElementById("country_select").value;
+        var sub_t = {{ order.get_total_price }}
+        document.getElementById('shipping__button').classList.remove('disabled')
+        if(x === "India"){
+            let charge = {{delvery_india}}
+            document.getElementById("delivery_charg").innerHTML = `$ ${charge}`
+            document.getElementById("payable_amount").innerHTML = `${sub_t} + ${charge} = $${sub_t + charge}(USD)`
+        }
+        else{
+            let charge = {{ delvery_foreign }}
+           document.getElementById("delivery_charg").innerHTML = `$ ${charge}`
+           document.getElementById("payable_amount").innerHTML = `${sub_t} + ${charge} = $${sub_t + charge}(USD)`
+        }
+    }
+
+</script>
+
+{% endblock script %}
+
+
+{% endblock  %}

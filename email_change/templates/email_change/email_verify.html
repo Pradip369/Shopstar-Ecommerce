@@ -1,0 +1,24 @@
+{% extends "email_change/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Email confirmation" %}{% endblock %}
+
+{% block breadcrumbs-box %}
+    {{ block.super }} &rsaquo; {% trans "Notice" %}
+{% endblock %}
+
+{% block coltype %}login{% endblock %}
+
+{% block content_title %}
+    <h1>{% trans "Email confirmation failed" %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="content-main" class="alert alert-danger m-3 border-danger">
+        <h5 class="text-center"><i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i> {% trans "This confirmation code has either expired or is invalid." %} <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i></h5><hr>
+        <p>{% trans "The requested email address change has failed." %}</p>
+        <strong>{% trans "Please, try to change it again." %}</strong>
+        <p><a href="{% url 'my_profile' request.user.profile.id %}" class="btn btn-primary btn-sm mt-2">{% trans "Back to your profile" %}</a></p>
+    </div>
+{% endblock %}
+

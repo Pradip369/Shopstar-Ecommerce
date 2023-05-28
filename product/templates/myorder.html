@@ -1,0 +1,115 @@
+{% extends "./base.html" %}
+
+{% block title %}My order{% endblock %}
+
+{% block content %}
+<hr/>
+<h4 class="text-center">My order</h4>
+<hr />
+{% if orderitem == 0 %}
+<center>
+<h3 class="text-danger mb-3">No any order yet done!!!</h3>
+<i class="fa fa-clipboard text-info fa-2x" aria-hidden="true"></i>
+<i class="fa fa-clipboard text-warning fa-2x" aria-hidden="true"></i>
+<i class="fa fa-clipboard text-primary fa-2x" aria-hidden="true"></i>
+<br /><br />
+{% if not request.user.is_authenticated %}
+<p>• You are not loged in..Please login first and then see your profile,order and so more...</p>
+<a class="btn btn-info btn-sm border px-3" href="{% url 'login_user' %}">Login</a>
+<a class="btn btn-success border btn-sm px-3" href="{% url 'registration_register' %}">Create new shopstar account</a>
+</center><br/>
+{% endif %}
+
+{% else %}
+
+{% for of in orderitem %}
+
+<div class="media mb-3 border">
+    <div class="row container-fluid">
+        <div class="col-4">
+            <img class="my-2 cart__img img-thumbnail" src="{{of.image.url}}" alt="{{of.item}} Image">
+        </div>
+        <div class="col-8">
+            <div class="media-body mt-1">
+                <h5 class="mt-0 py-1 text-dark border-info alert alert-info">Item : {{of.item}}</h5>
+                
+                <p><b>price</b> : ${{of.price}} x {{of.quantity}} + <small>Delivery Charge</small></p>
+                <p><b>Total Paid</b> : <span class="text-dark">${{of.total}}</span></p>
+                <h6>Payment Status : <b class="text-{% if of.payment_status == 'SUCCESS' %}success {% endif %}danger">{{of.payment_status}}</b></h6>
+
+                <h6>Order Status : <small>{{of.order_status}}</small></h6>
+                
+                <div class="progress">
+                    {% if of.order_status == 'Pending' %}
+                    <div class="progress-bar bg-dark font-weight-bold font-monospace progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"
+                        aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Order Pending</div>
+                    {% elif of.order_status == 'Accepted' %}
+                    <div class="progress-bar bg-primary font-monospace" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100">25%</div>
+                    <div class="progress-bar bg-secondary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%"
+                                                aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% elif of.order_status == 'Packed' %}
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                                            aria-valuemax="100"></div>
+                    <div class="progress-bar bg-warning text-dark font-monospace" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100">50%</div>
+                    <div class="progress-bar bg-secondary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%"
+                                                aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% elif of.order_status == 'On The Way' %}
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                    <div class="progress-bar bg-info font-monospace" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100">75%</div>
+                    <div class="progress-bar bg-secondary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%"
+                        aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% elif of.order_status == 'Delivered' %}
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                    <div class="progress-bar bg-success font-monospace" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100">100%</div>
+                    {% elif of.order_status == 'Cancel' %}
+                    <div class="progress-bar font-monospace font-weight-bold bg-danger progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="15" aria-valuemin="0"
+                        aria-valuemax="100">Order Canceled</div>
+                    {% endif %}
+                
+                </div>
+
+                <button class="my-1 btn-sm px-4 py-0 btn btn-outline-primary" type="button" data-toggle="collapse"
+                    data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="text-danger fa fa-link" aria-hidden="true"></i>  Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="collapse" id="collapseExample">
+        <div class="container my-2 card card-body myorder__collapse">
+            <p><b>Username : <span class="text-success">{{of.username}}</span></b></p>
+            <p><b>Item : <span class="text-primary">{{of.item}}</span></b></p>
+            <p><b>Quantity : <span class="text-warning">{{of.quantity}}</span></b></p>
+            <p><b>price : <span class="text-info">${{of.price}} x {{of.quantity}} + <small>Delivery Charge</small></span></b></p>
+            <p><b>Total paid : <span class="text-primary">${{of.total}}</span></b></p>
+            <p><b>Payment Status : <span class="text-{% if of.payment_status == 'SUCCESS' %}success {% endif %}danger">{{of.payment_status}}</span></b></p>
+            <p><b>category : <span class="text-info">{{of.category}}</span></b></p>
+            <p><b>Order complete : <span class="text-success">{{of.order_complete}}</span></b></p>
+            <p><b>Orderd date : <span class="text-primary">{{of.orderd_date}}</span></b></p>
+            <p><b>Reference Id : <span class="text-danger">{{of.reference_id}}</span></b></p>
+            <p><b>Order Id : <span class="text-info">{{of.order_id}}</span></b></p>
+            <p><b>Order Complete Id : <span class="text-danger">{{of.order_complete_id}}</span></b></p>
+            <p><b>Other Information : <span class="text-primary">{{of.customer_detail}}</span></b></p>
+            <a href="{% url 'order_to_pdf' of.id %}" class="btn btn-primary btn-sm" download="{{of.username}}__{{of.id}}" target="_blank">Save as PDF</a>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,1 @@
+📛📛ALERT📛📛Invalid login attempt by {{ object.username }} at {{ site }} (YOUR SITE)

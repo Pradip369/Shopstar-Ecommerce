@@ -1,0 +1,22 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Account Activated" %}{% endblock %}
+
+{% block content %}
+<h4 class="alert alert-info pt-5 mt-5">
+    {% trans "Your account is now activated." %}
+    {% if not user.is_authenticated %}
+    {% trans "Once a site administrator activates your account you can login." %}
+    {% endif %}
+</h4>
+{% endblock %}
+
+
+{% comment %}
+**registration/activation_complete.html**
+
+Used after successful account activation. This template has no context
+variables of its own, and should simply inform the user that their
+account is now active.
+{% endcomment %}

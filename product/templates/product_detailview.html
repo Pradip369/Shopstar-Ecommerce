@@ -1,0 +1,288 @@
+{% extends "./base.html" %}
+
+{% block title %}{{product.product_name}}{% endblock %}
+
+{% block meta %}
+  Item --> {{product.product_name}}
+  Description --> {{product.Product_description | safe}}
+{% endblock meta %}
+
+{% load social_share %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages%}
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+  <strong class="text-dark"> {{message}} </strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{% endfor %}
+{% endif %}
+<h6 class="text-dark text-center font-weight-bold border-info alert alert-success">{{product.product_name}}</h6>
+  <small id="like_message" class="mb-2"></small>
+
+<div class="productdetail__main m-2">
+<div class="stiky__img">
+  <h5 class="text-left">
+
+    <button type="button" class="border-dark rounded-pill shadow btn" data-toggle="modal" data-target="#sharemodal">
+      <i class="fa fa-share-alt" aria-hidden="true"></i>
+    </button>
+
+    {% if request.user.is_authenticated %}
+      <a id = 'like_or_dislike' type="button" class="border-dark rounded-pill shadow btn">
+        <span id="likedislike" class="{% if lk %}fa fa-heart text-danger{% else %}fa fa-heart-o text-danger{% endif %}" aria-hidden="true"></span>
+      </a>
+    {% else %}
+      <button type="button" class="border-dark rounded-pill shadow btn">
+        <a href="/user/accounts/login/"><i class="fa fa-heart-o text-danger" aria-hidden="true"></i></a>
+      </button>
+    {% endif %}
+    
+
+  </h5>
+
+<div class="prdetail_img">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval=false>
+      <ol class="carousel-indicators">          
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        {% if product.image1 %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        {% endif %}
+        {% if product.image2 %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        {% endif %}
+        {% if product.image3 %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        {% endif %}
+      </ol>
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <a onclick="doalert(this)" data-toggle="modal" data-target="#exampleModalCenter"
+            href="{{product.image.url}}"><img class="d-block productdetail__img img-fluid" src="{{product.image.url}}"
+              alt="{{product.product_name}}"></a>
+        </div>
+
+        {% if product.image1 %}
+        <div class="carousel-item">
+          <a onclick="doalert(this)" data-toggle="modal" data-target="#exampleModalCenter"
+            href="{{product.image1.url}}"><img class="d-block productdetail__img img-fluid" src="{{product.image1.url}}"
+              alt="{{product.product_name}}"></a>
+        </div>
+        {% endif %}
+
+        {% if product.image2 %}
+        <div class="carousel-item">
+          <a onclick="doalert(this)" data-toggle="modal" data-target="#exampleModalCenter"
+            href="{{product.image2.url}}"><img class="d-block productdetail__img img-fluid" src="{{product.image2.url}}"
+              alt="{{product.product_name}}"></a>
+        </div>
+        {% endif %}
+
+        {% if product.image3 %}
+        <div class="carousel-item">
+          <a onclick="doalert(this)" data-toggle="modal" data-target="#exampleModalCenter"
+            href="{{product.image3.url}}"><img class="d-block productdetail__img" src="{{product.image3.url}}"
+              alt="{{product.product_name}}"></a>
+        </div>
+        {% endif %}
+      </div>
+      <a class="carousel-control-prev h-100" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span><i class="fa fa-caret-left fa-3x text-light" aria-hidden="true"></i></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next h-100" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span><i class="fa fa-caret-right fa-3x text-light" aria-hidden="true"></i></span>
+        <span class="sr-only">Next</span>
+      </a>
+
+    </div>
+</div>
+</div>
+
+
+  <div class="productdetail__description mt-2">
+    <!-- Image -->
+    <!-- Product Description -->
+    <div class="productdetail__smallimg">
+
+      <a onclick="doalert(this)" href="{{product.image.url}}" data-toggle="modal" data-target="#exampleModalCenter"><img
+          class="productdetail__imgx active1" src="{{product.image.url}}" alt="{{product.product_name}}" /></a>
+      {% if product.image1 %}
+      <a onclick="doalert(this)" href="{{product.image1.url}}" data-toggle="modal" data-target="#exampleModalCenter">
+        <img class="productdetail__imgx" src="{{product.image1.url}}" alt="{{product.product_name}}" /></a>
+      {% endif %}
+      {% if product.image2 %}
+      <a onclick="doalert(this)" href="{{product.image2.url}}" data-toggle="modal"
+        data-target="#exampleModalCenter"><img class="productdetail__imgx" src="{{product.image2.url}}"
+          alt="{{product.product_name}}" /></a>
+      {% endif %}
+      {% if product.image3 %}
+      <a onclick="doalert(this)" href="{{product.image3.url}}" data-toggle="modal" data-target="#exampleModalCenter"><img class="productdetail__imgx" src="{{product.image3.url}}"
+          alt="{{product.product_name}}" /></a>
+      {% endif %}     
+    </div>
+   <br/>
+
+<div class="addcart__buynow_btn">
+          <a href="{% url 'update_cart' product.id 'add' %}"
+            class="border-dark btn btn-warning my-2 py-2 btn-block {% if product.total_quantity == 0 %}disabled text-danger {% endif %}"><i
+              class="fa fa-cart-plus" aria-hidden="true"></i>{% if product.total_quantity == 0 %} Out of stock {% else %} Add to cart
+            {% endif %}</a>
+
+          <a class="my-2 btn btn-success border-dark py-2 btn-block {% if product.total_quantity == 0 %}disabled text-light {% endif %}" href="{% url 'buy_now' product.id 'add' %}">{% if product.total_quantity == 0 %} Out of stock {% else %} Buy Now (<i class="fa fa-usd" aria-hidden="true"></i>{{product.price}}) {% endif %} </a>
+</div>
+
+    <div class="container-fluid">
+    <h4 class="my-3">Item :- <small><b>{{product.product_name}}</b></small></h4>
+    <p> Price : <b class="text-primary"><i class="fa fa-usd" aria-hidden="true"></i>{{product.price}}</b>{% if product.old_price %} (<del class="text-danger"><i class="fa fa-usd" aria-hidden="true"></i>{{product.old_price}}</del>){% endif %}</p>
+    <p>Item Category : <b class="text-info">{{product.category}}</b></p>
+    <p>Total Saving : <b class="text-success"><i class="fa fa-usd" aria-hidden="true"></i>{{product.total_saving}}</b></p>
+    </div>
+
+    <br/>
+    <hr/><h6 class="text-center">Item's Features or Description</h6><hr/>
+    <div class="container-fluid" style="background-color: rgb(248, 248, 248);">
+    <p>{{product.Product_description | safe}}</p>
+    </div>
+
+  </div>
+</div>
+
+<hr/>
+<h4 class="text-center">You might also like</h4>
+<hr/>
+
+<div class="category__product_like">
+  {% for pd in product_like %}
+  <div class="category__product_card rounded">
+    <a href="{% url 'product_detail' pd.id pd.slug_product %}">
+      <img src="{{pd.image.url}}" alt="{{pd.product_name}}" class="category__product_img_like img-fluid">
+    </a>
+    <div class="category__price_title">
+
+      <p class="text-left pl-2">Item : <b>{{pd.product_name | truncatewords:15}}</b></p>
+      <p class="text-left pl-2">Price : <strong><i class="fa fa-usd" aria-hidden="true"></i> {{pd.price}}</strong>{% if pd.old_price %}
+        (<del><small class="text-danger"><i class="fa fa-usd" aria-hidden="true"></i>{{pd.old_price}}</small></del>){% endif %}</p>
+    </div>
+    <div>
+
+      <a href="{% url 'update_cart' pd.id 'add' %}"
+        class="btn btn-warning border-dark btn-sm btn-block py-1 {% if pd.total_quantity == 0 %}disabled text-danger {% endif %}"><i
+          class="fa fa-cart-plus" aria-hidden="true"></i>{% if pd.total_quantity == 0 %} Out of stock {% else %} Add to
+        cart {% endif %}</a>
+ 
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+
+<h6 class="text-center font-weight-bold">No more item....</h6>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+    <div class="text-right modal-content">
+      <button type="button" class="btn btn-danger btn-sm font-weight-bold" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+      <div>
+        <img src="" id="thumbnail__modal_src" class="thumbnail__modal" />
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="sharemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+    <div class="text-right modal-content">
+     
+      <div class="modal-header">
+        <h4 class="modal-title">Share this item on : </h4>
+        <button type="button" class="btn btn-danger btn-sm font-weight-bold" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="text-left container">
+        <button type="button" class="btn my-1">{% post_to_whatsapp object_or_url %} Whatsapp</button>
+        <button type="button" class="btn my-1">{% post_to_facebook object_or_url %} Facebook</button>
+        <button type="button" class="btn my-1">{% post_to_telegram "shopstar: {{product.product_name}}" object_or_url %} Telegram</button>
+        <button type="button" class="btn my-1">{% post_to_twitter "shopstar: {{product.product_name}}. Check it out!" object_or_url  %} Twitter</button>
+        <button type="button" class="btn my-1">{% send_email product.product_name "shopstar: {{product.product_name}}. Check it out!" object_or_url %} Email</button>
+        <button type="button" class="btn my-1">{% post_to_reddit "shopstar: {{product.product_name}}" object_or_url %} Reddit</button>
+        <button type="button" class="btn my-1">{% post_to_gplus object_or_url %} G-plus</button>
+        <button type="button" class="btn my-1">{% post_to_linkedin object_or_url %} Linkedin</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+{% block script %}
+
+<script>
+
+  function doalert(obj) {
+    href = obj.getAttribute("href");
+    document.getElementById("thumbnail__modal_src").src = href
+  }
+</script>
+
+<script>
+
+  $(document).on('click','#like_or_dislike',function (e) {
+    var me = $(this);
+
+      $.ajax({
+        type: "POST",
+        url: "{% url 'like_product' product.id %}",
+        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        dataType: "json",
+        success: function (response) {
+          icon(response);
+        },
+        error: function (rs, e) {
+          alert(rs.responseText);
+
+        }
+      });
+      
+      function icon(response){
+        if (response.message === 'Like') {
+          $('#like_message').empty();
+          $('#like_message').append("• This Item is Saved in your Wish List!!<a class='btn btn-sm p-0' href='{% url 'my_Wishlist' 'items' %}'>⏩</a>");
+          $('#likedislike').addClass('likedislike')
+          me.find('span').removeClass('fa fa-heart-o');
+          me.find('span').addClass('fa fa-heart');
+        };
+
+        if (response.message === 'Dislike') {
+          $('#like_message').empty();
+          $('#like_message').append("• This Item is Removed from your Wish List!!<a class='btn btn-sm p-0' href='{% url 'my_Wishlist' 'items' %}'>⏩</a>");
+          $('#likedislike').removeClass('likedislike')
+          me.find('span').removeClass('fa fa-heart');
+          me.find('span').addClass('fa fa-heart-o');
+        };
+      }
+
+    });
+
+</script>
+
+{% endblock script %}
+
+{% endblock %}

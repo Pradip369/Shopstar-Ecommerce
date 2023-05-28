@@ -1,0 +1,64 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Log in" %}{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<main class="pt-4 my-3">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-5 offset-md-4">
+
+                <form method="post" action="" novalidate class="form-control login_inner">
+                    <h3 class="text-weight-bold alert text-center py-1">Login</h3><hr/>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="text-center">
+                        <input type="submit" class="m-3 btn btn-success px-4 border-dark btn-sm" value="{% trans 'Log in' %}" />
+                        <input type="hidden" name="next" value="{{ next }}" />
+                        <a href="{% url 'reset_password' %}"
+                            class="m-3 btn btn-danger btn-sm border-dark">{% trans "Forgot password ?" %}</a>
+                        <br>
+                        <hr><small><b>New to Shopstar? </b></small>
+
+                        <a href="{% url 'registration_register' %}" class="mb-2 btn btn-outline-primary btn-sm rounded">{% trans "Create New Shopstar Account" %}</a>
+                    </div>
+                </form>
+                <br>
+              
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+
+{% comment %}
+**registration/login.html**
+
+It's your responsibility to provide the login form in a template called
+registration/login.html by default. This template gets passed four
+template context variables:
+
+``form``
+    A Form object representing the login form. See the forms
+    documentation for more on Form objects.
+
+``next``
+    The URL to redirect to after successful login. This may contain a
+    query string, too.
+
+``site``
+    The current Site, according to the SITE_ID setting. If you don't
+    have the site framework installed, this will be set to an instance
+    of RequestSite, which derives the site name and domain from the
+    current HttpRequest.
+
+``site_name``
+    An alias for site.name. If you don't have the site framework
+    installed, this will be set to the value of
+    request.META['SERVER_NAME']. For more on sites, see The
+    "sites" framework.
+{% endcomment %}

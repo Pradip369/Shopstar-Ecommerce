@@ -1,0 +1,21 @@
+{% extends "email_change/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sem Email" %}{% endblock %}
+
+{% block breadcrumbs-box %}
+    {{ block.super }} &rsaquo; {% trans "Notice" %}
+{% endblock %}
+
+{% block content_title %}
+    <h1>{% trans "Sem Email" %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="content-main" class="alert alert-danger m-3 border-success">
+        <strong class="text-weight-bold text-danger"><i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i> {% trans "This email address already registered" %} <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i></strong><hr>
+        <small>{% trans "Try with a unique email address!!!" %}</small><br><br>
+        <p>&laquo; <a href="/change_email/email/change/" class="btn btn-info px-3 py-1 btn-sm">{% trans "Try again" %}</a></p>
+    </div>
+{% endblock %}
+

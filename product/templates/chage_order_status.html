@@ -1,0 +1,35 @@
+{% extends "./base.html" %}
+
+
+{% block content %}
+{% if messages %}
+{% for message in messages%}
+<div class="text-center alert alert-success alert-dismissible fade show" role="alert">
+    <strong class="text-dark"> {{message}} </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{% endfor %}
+{% endif %}
+<form class="my-4 container" method="POST" action="{% url 'chage_order_status' %}">
+    {% csrf_token %}
+    <div class="container w-75 alert-success rounded py-3">
+        <h5 class="text-center font-monospace">Change Order Status</h5><hr/>
+        <input autofocus="True" required="True" type="text" name = 'ref_id' class="form-control" placeholder="Enter Reference id">
+        <br/>
+        <select name = "status" class="w-100" style="background-color: rgb(159, 221, 151);">
+            <option value="none" selected disabled hidden>Select status</option>
+            <option>Accepted</option>
+            <option>Packed</option>
+            <option>On The Way</option>
+            <option>Delivered</option>
+            <option>Cancel</option>
+        </select>
+        <br/><br/>
+        <button type="submit" class="btn btn-success btn-block btn-sm">Submit</button>
+    </div>
+</form>
+
+{% endblock %}

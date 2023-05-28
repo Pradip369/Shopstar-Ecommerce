@@ -1,0 +1,70 @@
+{% extends "./base.html" %}
+
+{% block title %}PayMent Status{% endblock %}
+
+
+{% block content %}
+    
+
+<center>
+    <img class="paymentstatus__gif mt-3" src="/static/images/success.gif" alt="success" />
+    <img class="paymentstatus__gif mt-3" src="/static/images/success.gif" alt="success" />
+    <img class="paymentstatus__gif mt-3" src="/static/images/success.gif" alt="success" />
+</center>
+
+    <hr/>
+    <h3 class="text-center">Order Detail</h3>
+    <hr/>
+    {% if postData.signature == computedsignature %}
+    <div class="container">
+        <div class="panel panel-success">
+            <div class="panel-heading text-success"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Payment Verification Successful</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td>Order ID</td>
+                            <td>{{postData.orderId}}</td>
+                        </tr>
+                        <tr>
+                            <td>Unique ID</td>
+                            <td>{{user}}</td>
+                        </tr>
+                        <tr>
+                            <td>Order Amount</td>
+                            <td>$ {{postData.orderAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Reference ID</td>
+                            <td>{{postData.referenceId}}</td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Status</td>
+                            <td class="text-{% if postData.txStatus == 'SUCCESS' %}success {% endif %}danger">{{postData.txStatus}}</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Mode</td>
+                            <td>{{postData.paymentMode}}</td>
+                        </tr>
+                        <tr>
+                            <td>Message</td>
+                            <td>{{postData.txMsg}}</td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Time</td>
+                            <td>{{postData.txTime}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    <center>
+        <a class="btn btn-dark py-0 px-2" href="/"> &#x2190; Continue Shopping</a>
+        <a class="btn btn-info py-0 px-2" href="{% url 'my_order' %}">View My Order</a>
+        <br /><br /><br />
+    </center>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+{% endblock %}

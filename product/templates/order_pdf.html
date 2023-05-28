@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Order Detail</title>
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            border: 2px solid greenyellow;
+        }
+
+        td{
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+            font-size: large;
+        }
+        .tm{
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <center>
+        <h1
+            style="background-color: rgb(173, 240, 143); text-decoration: none; padding: 8px; font-family: cursive; font-weight: bolder;">
+            ShopStar</h1>
+    </center>
+    <hr />
+    <h1>Order Detail:</h1>
+    <h4>Username : {{obj.username}}</h4>
+    <h4>Order Report : {{today}}</h4>
+    
+    <table>
+        <tr>
+            <td class="tm">username</td>
+            <td>{{obj.username}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Item</td>
+            <td>{{obj.item}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Price</td>
+            <td>$ {{obj.price}} + <small>Delivery Charge</small></td>
+        </tr>
+        <tr>
+            <td class="tm">Quantity</td>
+            <td>{{obj.quantity}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Total Paid</td>
+            <td>$ {{obj.total}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Payment status</td>
+            <td>{{obj.payment_status}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Category</td>
+            <td>{{obj.category}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Order complete</td>
+            <td>{{obj.order_complete}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Reference id</td>
+            <td>{{obj.reference_id}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Order id</td>
+            <td>{{obj.order_id}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Order complete id</td>
+            <td>{{obj.order_complete_id}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Customer detail</td>
+            <td>{{obj.customer_detail}}</td>
+        </tr>
+        <tr>
+            <td class="tm">Orderd date</td>
+            <td>{{obj.orderd_date}}</td>
+        </tr>
+    </table>
+    <h3>Have a great day {{obj.username}}!!</h3>
+
+</body>
+
+</html>

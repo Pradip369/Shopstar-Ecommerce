@@ -1,0 +1,41 @@
+{% extends "./base.html" %}
+
+{% block title %}PayMent Redirecting{% endblock %}
+
+
+{% block content %}
+<main class="alert-danger">
+    <h1>Redirecting you to the payment page......</h1>
+    <h3>Please do not refresh your page........</h3>
+    <p>Please wait!!! this step may be take a few minutes....</p>
+
+<div class="text-center">
+
+<div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+<div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status"></div>
+<div class="spinner-grow text-danger" style="width: 3rem; height: 3rem;" role="status"></div>
+<div class="spinner-grow text-warning" style="width: 3rem; height: 3rem;" role="status"></div>
+<div class="spinner-grow text-dark" style="width: 3rem; height: 3rem;" role="status"></div>
+<div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status"></div>
+<div class="spinner-grow text-danger" style="width: 3rem; height: 3rem;" role="status"></div>
+
+</div>
+
+
+    <form action="{{url}}" method="post" name='frm1'>
+        <input type="hidden" name="signature" value="{{signature}}" />
+        {% for key,value in postData.items %}
+            <input type="hidden" name="{{key}}" value="{{value}}" />
+        {% endfor %}
+    </form>
+
+</main>
+
+{% block script %}
+<script>
+    document.frm1.submit();
+</script>
+
+{% endblock script %}
+
+{% endblock %}

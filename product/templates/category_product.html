@@ -1,0 +1,94 @@
+{% extends "./base.html" %}
+
+{% block meta %}
+    {{category.category_name}}-->
+    {% for pd in product %}
+        {{pd.product_name}}
+    {% endfor %}
+{% endblock meta %}
+
+
+{% block title %}{{category.category_name}}{% endblock %}
+
+{% block content %}
+
+
+
+<div class="py-0 alert text-dark border-dark">
+    <div class="row">
+
+        <div class="col-2 text-left pl-0">
+            <a class="btn btn-light" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+            </svg></a>
+        </div>
+
+        <div class="col-5 pt-1 text-right"> 
+            <h4>{{category.category_name}}</h4>
+        </div>
+        
+        <div class="col-5 text-right pr-0">
+            <a href="#" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16"><path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" /></svg> Filter</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Filter By</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6><a class="btn btn-sm py-0" href="{% url 'home_page_category' category.id 'low_to_high' category.slug_category %}"><i class="fa fa-circle-o" aria-hidden="true"></i></a>Price : <i class="fa fa-arrow-down" aria-hidden="true"></i>Low To <i class="fa fa-arrow-up" aria-hidden="true"></i>High</h6>
+                <h6><a class="btn btn-sm py-0" href="{% url 'home_page_category' category.id 'hight_to_low' category.slug_category %}"><i class="fa fa-circle-o" aria-hidden="true"></i></a>Price : <i class="fa fa-arrow-up" aria-hidden="true"></i>High To <i class="fa fa-arrow-down" aria-hidden="true"></i>Low</h6>
+                <h6><a class="btn btn-sm py-0" href="{% url 'home_page_category' category.id 'randomly' category.slug_category %}"><i class="fa fa-circle-o" aria-hidden="true"></i></a>Randomly <i class="fa fa-random" aria-hidden="true"></i></h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% if messages %}
+{% for message in messages%}
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong class="text-dark"> {{message}} </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>{% endfor %}
+{% endif %}
+
+
+<div class="category__product">
+{% for pd in product %}
+<div class="category__product_card">
+    <a href="{% url 'product_detail' pd.id pd.slug_product %}">
+        <img src="{{pd.image.url}}" alt="{{pd.product_name}}" class="category__product_img img-fluid img-thumbnail">
+    </a>
+    <div class="category__price_title">
+
+        <p class="text-left pl-2">Item : <b>{{pd.product_name | truncatewords:15}}</b></p>
+        <p class="text-left pl-2">Price : <i class="fa fa-usd" aria-hidden="true"></i> <strong>{{pd.price}}</strong> {% if pd.old_price %}
+            (<del><small class="text-danger"><i class="fa fa-usd" aria-hidden="true"></i>{{pd.old_price}}</small></del>){% endif %}</p>
+    </div>
+    <div>
+
+        <a href="{% url 'update_cart' pd.id 'add' %}" class="btn btn-warning mb-2 py-1 px-4 {% if pd.total_quantity == 0 %}disabled text-danger {% endif %}"><i class="fa fa-cart-plus" aria-hidden="true"></i>{% if pd.total_quantity == 0 %} Out of stock {% else %} Add to cart {% endif %}</a>
+        <a href="{% url 'product_detail' pd.id pd.slug_product %}" class="btn btn-success mb-2 px-4 py-1"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
+    </div>
+</div>
+
+{% endfor %}
+</div>
+<h6 class="text-center font-weight-bold">No more item....</h6>
+
+{% endblock %}

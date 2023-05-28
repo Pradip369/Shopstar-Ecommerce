@@ -1,0 +1,44 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Resend Activation Email" %}{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<strong><h5 class="pt-3 pb-0 alert alert-warning text-center text-dark text-weight-bold">{% trans "Enter your registrated email address for resend activation link!!!!" %}</h5></strong>
+<div class="w-75 h-75 pt-5">
+
+  <div class="container">
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+<form method="post"  action="" class="reset_pass px-1" novalidate>
+    <center class="mt-3"><strong>Enter Email Address</strong></center><hr>
+
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br/>
+   <center>
+     <input type="submit" class="btn btn-success mb-1 btn-sm px-3 py-1 border-dark" value="{% trans 'Send' %}" />
+     <a href="/user/accounts/register/complete/" class="mb-1 py-1 btn btn-danger btn-sm px-3 border-dark">Cancel</a>
+    </center>
+</form>
+</form>
+</div>
+</div>
+</div>
+</div><br><br>
+{% endblock %}
+
+
+{% comment %}
+**registration/resend_activation_form.html**
+Used to show the form users will fill out to resend the activation email. By
+default, has the following context:
+
+``form``
+    The registration form. This will be an instance of some subclass
+    of ``django.forms.Form``; consult `Django's forms documentation
+    <http://docs.djangoproject.com/en/dev/topics/forms/>`_ for
+    information on how to display this in a template.
+{% endcomment %}

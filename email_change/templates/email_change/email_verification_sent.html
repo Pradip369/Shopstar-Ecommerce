@@ -1,0 +1,23 @@
+{% extends "email_change/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Verification email sent" %}{% endblock %}
+
+{% block breadcrumbs-box %}
+    {{ block.super }} &rsaquo; {% trans "Notice" %}
+{% endblock %}
+
+{% block coltype %}login{% endblock %}
+
+{% block content_title %}
+    <h1>{% trans "Verification email sent" %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div id="content-main" class="alert alert-success m-3 border-success">
+        <strong class="text-weight-bold text-dark">{% trans "An email containing a verification link has been sent to your new email address." %}</strong><br><br>
+        <small>{% trans "Follow the instructions in this email in order to successfully change your current email address." %}</small><br><br>
+        <p>&laquo; <a href="{% url 'my_profile' request.user.profile.id %}" class="btn btn-primary btn-sm">{% trans "Back to your profile" %}</a></p>
+    </div>
+{% endblock %}
+

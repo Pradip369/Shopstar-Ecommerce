@@ -1,0 +1,83 @@
+{% extends "./base.html" %}
+
+{% block title %}My Wish List{% endblock %}
+
+{% block content %}
+<hr />
+<h4 class="text-center">My Wish List</h4>
+<hr />
+
+{% if messages %}
+{% for message in messages%}
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong class="text-dark"> {{message}} </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{% endfor %}
+{% endif %}
+
+
+{% if like_list == 0 %}
+<center class="mt-3">
+    <h4 class="text-danger">Your Wish List is Empty!!!</h4>
+
+    <i class="fa fa-heartbeat fa-1x text-info" aria-hidden="true"></i>
+    <i class="fa fa-heartbeat fa-1x text-warning" aria-hidden="true"></i>
+    <i class="fa fa-heartbeat fa-1x text-success" aria-hidden="true"></i>
+
+    {% if not request.user.is_authenticated %}
+
+    <br /><br />
+    <p>• You are not loged in..Please login first and then see your profile,order and so more...</p>
+
+    <a class="btn btn-info btn-sm border px-3" href="{% url 'login_user' %}">Login</a>
+    <a class="btn btn-success border btn-sm px-3" href="{% url 'registration_register' %}">Create new shopstar
+        account</a>
+
+    {% endif %}
+
+</center>
+
+{% else %}
+
+<h4 class="text-right"><a class="btn btn-danger px-2 py-1 border-dark" href="{% url 'my_Wishlist' 'remove' %}">Clear Wish List</a></h4>
+
+{% for item in like_list %}
+<div class="media mb-2 border">
+
+    <div class="row container-fluid">
+        <div class="col-4">
+            <a href="{% url 'product_detail' item.product.id item.product.slug_product %}"><img class="my-2 cart__img img-thumbnail"
+                    src="{{item.product.image.url}}" alt="{{item.product.product_name}}"></a>
+        </div>
+
+        <div class="col-8">
+            <div class="media-body mt-1">
+                <a href="{% url 'product_detail' item.product.id item.product.slug_product %}" class="btn p-0"><h5 class="mt-0"><b>Item</b> : <small>{{item.product.product_name}}</small></h5></a>
+                <p class="mt-1"><b>Price</b> : ${{item.product.price}} {% if item.product.old_price %} (<del
+                        class="text-danger">${{item.product.old_price}}</del>){% endif %}</p>
+
+
+                <a href="{% url 'update_cart' item.product.id 'add' %}"
+                class="mb-2 btn btn-warning border-dark btn-sm py-1 {% if item.product.total_quantity == 0 %}disabled text-danger {% endif %}"><i
+                class="fa fa-cart-plus" aria-hidden="true"></i>{% if item.product.total_quantity == 0 %} Out of stock {% else %} Add to
+                cart {% endif %}</a>
+
+                <a class="mb-2 btn-sm btn btn-success border-dark py-1 {% if item.product.total_quantity == 0 %}disabled text-light {% endif %}"
+                href="{% url 'buy_now' item.product.id 'add' %}">{% if item.product.total_quantity == 0 %} Out of stock {% else %} Buy Now
+                {% endif %} </a>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endfor %}
+{% endif %}
+<br />
+
+{% endblock  %}

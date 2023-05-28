@@ -1,0 +1,105 @@
+{% extends "./base.html" %}
+
+{% block title %}My profile{% endblock %}
+
+{% block content %}
+
+<div class="my__profile">
+<h4 class="text-center my-2">My Profile</h4>
+<hr/>
+
+{% if messages %}
+{% for message in messages%}
+<div class="text-center alert alert-success alert-dismissible fade show" role="alert">
+    <strong class="text-dark"> {{message}} </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{% endfor %}
+{% endif %}
+
+<div class="row container">
+
+<div class="col-md-4 text-center mb-3">
+{% if profile_data.profile_pic %}
+<a href="{{profile_data.profile_pic.url}}"><img class="profile__pic" src="{{profile_data.profile_pic.url}}"/></a>
+<br/>
+<a class="btn btn-sm" href="{% url 'edit_profile' request.user.profile.id %}#profile_pic_hash"><p>📸 Change</p></a>
+{% else %}
+<h1>
+    <i class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i><br/>
+<a class="btn btn-sm" href="{% url 'edit_profile' request.user.profile.id %}#profile_pic_hash">
+    <p>📸 Change</p>
+</a>
+
+</h1>
+{% endif %}
+</div>
+
+<div class="col-md-8">
+
+<table class="table table-hover">
+    <tbody>
+        <tr>
+            <td>Username</td>
+            <td class='text-center'><b>{{profile_data.user_name}}</b> <a data-toggle="tooltip" data-placement="left" title="Change Username" href="{% url 'change_username' request.user.id %}"> <i class="text-danger fa fa-exchange" aria-hidden="true"></i></a></td>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td class='text-center'><b>{{profile_data.full_name}}</b></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td class='text-center'><b>{{profile_data.age}}</b> Year</td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td class='text-center'><b>{{profile_data.gender}}</b></td>
+        </tr>
+        <tr>
+            <td>Phone No.</td>
+            <td class='text-center'><b>{{profile_data.phone_no}}</b></td>
+        </tr>
+        <tr>
+            <td>Email <a data-toggle="tooltip" data-placement="left" title="Change Email" class="btn-info btn-sm py-0 m-0" href="/change_email/email/change/"><i class="fa fa-exchange"
+                    aria-hidden="true"></i></a></td>
+            <td class='text-center'><b>{{request.user.email}}</b> </td>
+        </tr>
+        <tr>
+            <td>Last Login</td>
+            <td class='text-center'>{{request.user.last_login}}</td>
+        </tr>
+        <tr>
+            <td>Joined Date</td>
+            <td class='text-center'>{{profile_data.cr_date}}</td>
+        </tr>
+    </tbody>
+</table>
+<br/>
+
+<div class="row">
+
+    <div class="col-md-6">
+    <a class="my-1 profile_btn btn-block btn-sm btn btn-transperant"
+        href="{% url 'edit_profile' request.user.profile.id %}"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+        Edit Profile <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+    </a>
+    </div>
+
+    <div class="col-md-6">
+        <a class="my-1 change_pass_btn btn-sm btn-block btn btn-transperant" href="/user/accounts/password/change/"><i
+        class="fa fa-recycle" aria-hidden="true"></i> Change Password <i class="fa fa-angle-double-right"
+        aria-hidden="true"></i>
+    </a>
+    </div>
+
+</div>
+<br>
+</div>
+
+</div>
+
+</div>
+{% endblock  %}

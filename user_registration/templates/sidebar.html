@@ -1,0 +1,106 @@
+<div class="sidebar__btn">
+    <span class="fa fa-bars bg-dark text-light p-2 px-3 border-dark btn rounded font-weight-bold" style="font-size: 20px;" aria-hidden="true"></span>
+</div>
+
+<nav class="sidebar">        
+        <div class="text">
+            
+            {% if request.user.is_authenticated %}
+            <div class="row container">
+
+            <div class="col-4 text-right">
+                {% if request.user.profile.profile_pic %}
+               <a class="btn btn-sm" href="{% url 'my_profile' request.user.profile.id %}"><img class="sidebar__img" src="{{request.user.profile.profile_pic.url}}" /></a>
+                {% else %}
+                <a class="btn btn-sm p-0" href="{% url 'edit_profile' request.user.profile.id %}#profile_pic_hash"><i class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i></a>
+                {% endif %}
+            </div>
+            <div class="col-8 text-left">
+                <a class="btn btn-sm p-0 pl-2 font-weight-bold" href="{% url 'my_profile' request.user.profile.id %}"><i>Hello, {{request.user.username | capfirst}}</i></a>
+            </div>
+
+            </div>
+            {% else %}
+
+            <div class="row container">
+            
+                <div class="col-4 text-right">
+                    
+                    <a class="btn btn-sm p-0" href="/user/accounts/login/"><i
+                            class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i></a>
+                </div>
+                <div class="col-8 text-left">
+                    <a class="btn btn-sm p-0 font-weight-bold" href="/user/accounts/login/">
+                        Welcome, Guest</a>
+                </div>
+            
+            </div>
+
+            {% endif %}
+      </div>
+
+    <ul class="sidebar__nav">
+            <li class="main__li"><a href="/"><i class="fa fa-home text-primary" aria-hidden="true"></i> Home</a></li>
+
+            <li class="main__li"><a href="/my_order/"><i class="fa fa-shopping-bag text-danger" aria-hidden="true"></i> My Order</a></li>
+            <li class="main__li"><a href="/cart/"><i class="fa fa-shopping-basket text-info" aria-hidden="true"></i> Cart</a></li>
+            
+            {% if request.user.is_authenticated %}
+            <li class="main__li"><a href="{% url 'my_profile' request.user.profile.id %}"><i class="fa fa-user-plus text-success" aria-hidden="true"></i> My Profile</a></li>
+            {% else %}
+            <li class="main__li"><a href="/user/accounts/login/"><i class="fa fa-user-plus text-success" aria-hidden="true"></i> My Profile</a></li>
+
+            {% endif %}
+            <li class="main__li"><a href="/checkout/"><i class="fa fa-usd text-primary" aria-hidden="true"></i> Checkout</a></li>
+            <li class="main__li"><a href="/my_wishlist/items/"><i class="fa fa-heart-o text-danger" aria-hidden="true"></i> My Wish List</a></li>
+
+
+            <li class="main__li">
+                <a class="srv_btn category__btn"><i class="fa fa-folder-open-o text-info" aria-hidden="true"></i> Category <span class="second"><i class="fa fa-caret-down"
+                            aria-hidden="true"></i></span></a>
+                
+                <ul class="sidebar__nav submenu__show1">
+                    {% for ct in categories %}
+                    <li><a href="{% url 'home_page_category' ct.id 'no' ct.slug_category %}">• {{ct.category_name}}</a></li>
+                    {% endfor %}
+                </ul>
+                
+            </li>
+            
+            <li class="main__li"><a href="" data-toggle="modal" data-target="#change_language"><i class="fa fa-language text-primary" aria-hidden="true"></i> Change Language</a></li>
+            <li class="main__li"><a href="{% url 'bug_report' %}"><i class="fa fa-bug text-danger" aria-hidden="true"></i> Bug Report</a></li>
+            <li class="main__li"><a href="{% url 'contact_us' %}"><i class="fa fa-mail-forward text-primary" aria-hidden="true"></i> Contact Us</a></li>
+
+            <li class="main__li">
+                <a class="feat_btn category__btn"><i class="fa fa-chain-broken" aria-hidden="true"></i> More <span
+                        class="first"><i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
+            
+                <ul class="sidebar__nav submenu__show">
+                    <li><a href="{% url 'term_and_condition' %}">• Term & Condition</a></li>
+                    <li><a href="{% url 'privacy_policy' %}">• Privacy Policy</a></li>
+                    <li><a href="{% url 'disclaimer' %}">• Disclaimer</a></li>
+                </ul>
+            
+            </li>
+
+
+
+            <li class="main__li">
+                {% if request.user.is_authenticated %}
+                <a class="mb-5" href="/user/accounts/logout/"><i class="fa fa-sign-out text-danger" aria-hidden="true"></i> Logout</a>
+                    {% if request.user.is_staff %}
+                        <a href="/mom/shreeji/maharaj/369/" target="_incognito"><i class="fa fa-user-secret text-info" target="_blank" aria-hidden="true"></i> Go To Admin</a>
+                        <a href="/chage_order_status/" target="_incognito"><i class="fa fa-star-half-empty text-dark" target="_blank" aria-hidden="true"></i> Order Status</a>
+                    {% endif %}    
+                {% else %}
+                <a href="/user/accounts/login/"><i class="fa fa-sign-in text-primary" aria-hidden="true"></i> Login</a>
+                <li class="main__li">
+                <a class="mb-5" href="/user/accounts/register/"><i class="fa fa-link text-success" aria-hidden="true"></i> Create New Account</a>
+                </li>
+            </li>
+                {% endif %}
+
+            <a href="/"><img class="img-fluid mb-2 pl-2" src="/static/images/logo_shopstar.png" width='190px' height='42px' alt="ShopStar" /></a>
+        </ul>
+    
+</nav>

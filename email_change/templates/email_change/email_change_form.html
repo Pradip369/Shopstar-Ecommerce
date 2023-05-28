@@ -1,0 +1,39 @@
+{% extends "email_change/base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block title %}{% trans "Change email address" %}{% endblock %}
+
+{% block breadcrumbs-box %}
+    {{ block.super }} &rsaquo; {% trans 'Change email address' %}
+{% endblock %}
+
+{% block coltype %}login{% endblock %}
+
+{% block content_title %}
+    <h1 class="text-center alert alert-info">{% trans "Change email address" %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<h4 class="text-center mt-2 alert alert-warning py-2 text-dark border-danger text-weight-bold">Change Email</h4>
+    <div id="content-main" class="alert alert-success border-info m-3">
+            
+                <p>{% trans "Your current email address is:" %}
+                <strong class="text-danger text-weight-bold">{{ user.email }}</strong>
+                </p>
+                <p>{% trans "To associate a new email address with your account, please enter the new address in the box below." %}
+                </p>
+                
+                <form method="post" class="w-75" novalidate>
+                    {% csrf_token %}
+                    {{ form | crispy}}
+                    <br>
+                <p> 
+                    <a href="{% url 'my_profile' request.user.profile.id %}" class="my-1 px-3 btn btn-primary btn-sm">{% trans "Back to your profile" %}</a>
+                    <input type="submit" class="my-1 btn btn-success btn-sm" value="{% trans 'Send Verification Link ' %}" />
+                </p>    
+                </form>
+            
+    </div>
+{% endblock %}
+

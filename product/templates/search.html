@@ -1,0 +1,62 @@
+{% extends "./base.html" %}
+
+{% block title %}Search Items{% endblock %}
+
+{% block content %}
+
+<form class="my-4 container" id="search" method="POST" action="{% url 'search' %}">
+    {% csrf_token %}
+    <div class="input-group mb-2">
+        <input value="{{request.POST.txtSearch}}" autofocus="True" required="True" type="text" class="form-control search2" name="txtSearch" id='txtSearch'
+            id="inlineFormInputGroup" placeholder="Search any Item...">
+        <div class="input-group-prepend">
+            <button type="submit" class="btn btn-success border-dark"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+        </div>
+    </div>
+</form>
+
+{% if messages %}
+{% for message in messages%}
+<div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
+    <strong class="text-dark"> {{message}}  </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{% endfor %}
+{% endif %}
+
+{% if search_qs == 'no' %}
+<p class="container-fluid">• Search item!!!(Enter item's name or price or category or any keyword related to item...)</p>
+
+{% else %}
+<div class="category__product_like">
+    {% for pd in search_qs %}
+    <div class="category__product_card rounded">
+        <a href="{% url 'product_detail' pd.id pd.slug_product %}">
+            <img src="{{pd.image.url}}" alt="{{pd.product_name}}" class="category__product_img_like img-fluid">
+        </a>
+        <div class="category__price_title">
+
+            <p class="text-left pl-2">Item : <b>{{pd.product_name | truncatewords:15}}</b></p>
+            <p class="text-left pl-2">Price : <strong>$ {{pd.price}}</strong>{% if pd.old_price %}
+                (<del><small class="text-danger">${{pd.old_price}}</small></del>){% endif %}</p>
+        </div>
+        <div>
+
+            <a href="{% url 'buy_now' pd.id 'add' %}"
+                class="btn btn-success border-dark btn-sm btn-block py-1 {% if pd.total_quantity == 0 %}disabled text-danger {% endif %}"><i
+                    class="fa fa-cart-plus" aria-hidden="true"></i>{% if pd.total_quantity == 0 %} Out of stock
+                {% else %} Buy now {% endif %}</a>
+
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+<center>No more item...</center>
+
+{% endif %}
+{% endblock %}

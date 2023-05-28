@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+    <center>
+        <h1 style="background-color: rgb(164, 226, 164); text-decoration: none; padding: 1px; font-family: cursive; font-weight: bolder;">ShopStar</h1>
+    </center>
+    <hr />
+    
+    <h2>New Order Detail</h2>
+
+    <table>
+        <tr>
+            <td>Order ID</td>
+            <td>{{postData.orderId}}</td>
+        </tr>
+
+        <tr>
+            <td>Item Name</td>
+            <td>{{product_name}}(${{product_price}})</td>
+        </tr>
+        <tr>
+            <td>Quantity</td>
+            <td>{{product_quantity}}</td>
+        </tr>
+
+        <tr>
+            <td>User ID</td>
+            <td>{{user}}</td>
+        </tr>
+        <tr>
+            <td>Reference ID</td>
+            <td>{{postData.referenceId}}</td>
+        </tr>
+        <tr>
+            <td>Transaction Status</td>
+            <td>{{postData.txStatus}}</td>
+        </tr>
+        <tr>
+            <td>Payment Mode</td>
+            <td>{{postData.paymentMode}}</td>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td>{{postData.txMsg}}</td>
+        </tr>
+        <tr>
+            <td>Transaction Time</td>
+            <td>{{postData.txTime}}</td>
+        </tr>
+        <tr>
+            <td>Address Information</td>
+            <td>{{shipping_info.house_no}},{{shipping_info.full_address}},Nr.{{shipping_info.nearest_landmark}},{{shipping_info.city}},{{shipping_info.state}},{{shipping_info.zipcode}},{{shipping_info.country.name}}.
+            </td>
+        </tr>
+        <tr>
+            <td>Contact Number</td>
+            <td>{{shipping_info.phone_no}}</td>
+        </tr>
+        <tr>
+            <td>Contact Email</td>
+            <td>{{shipping_info.customer.email}}</td>
+        </tr>
+    </table>
+<h1>Go to admin : <a href="mom/shreeji/maharaj/369/">Admin</a></h1>
+</body>
+
+</html>

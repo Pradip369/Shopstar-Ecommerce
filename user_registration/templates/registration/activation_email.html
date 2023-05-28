@@ -1,0 +1,79 @@
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>{{ site.name }} {% trans "registration" %}</title>
+</head>
+<body style="margin: 5px; padding: 5px; border: 2px solid orange; background-color: rgb(245, 209, 143);">
+
+    <center><h1><a href="http://{{site.domain}}" style="text-decoration: none; padding: 1px; font-family: cursive; font-weight: bolder;">ShopStar</a></h1></center>
+    <hr/>
+    {% blocktrans with site_name=site.name %}
+    <p>
+    • You (or someone pretending to be you) have asked to register an account at
+    <b>ShopStar</b>.  If this wasn't you, please ignore this email
+    and your address will be removed from our records.
+    </p>
+    {% endblocktrans %}
+
+
+    {% blocktrans %}
+    <h2>
+    • To activate this account, please click the below button within the next
+    <span>{{ expiration_days }}</span> days:
+    </h2>
+    {% endblocktrans %}
+
+
+<center>
+    <button style="font-size: 23px; padding: 3px; border-radius: 5px; background-color: rgb(159, 99, 214);"><a style="text-decoration: none; color: white;" href="http://{{site.domain}}{% url 'registration_activate' activation_key %}">
+        Activate Now
+    </a></button>
+</center>
+
+
+    {% blocktrans with site_name=site.name %}
+    <p>
+    Sincerely, <b>{{ site_name }}</b> Management.
+    </p>
+    {% endblocktrans %}
+
+</body>
+
+</html>
+
+
+{% comment %}
+**registration/activation_email.html**
+
+Used to generate the html body of the activation email. Should display a
+link the user can click to activate the account. This template has the
+following context:
+
+``activation_key``
+    The activation key for the new account.
+
+``expiration_days``
+    The number of days remaining during which the account may be
+    activated.
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.requests.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+
+``user``
+    The new user account
+
+``request``
+    ``HttpRequest`` instance for better flexibility.
+    For example it can be used to compute absolute register URL:
+
+        {{ request.scheme }}://{{ request.get_host }}{% url 'registration_activate' activation_key %}
+{% endcomment %}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Offer!!! Offer in all items..Buy any items-cheapest price..Ecommerce,retails and so more..Please visit this site..">
+    <meta name="description" content="{% block meta %}{% endblock meta %}">
+    
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#72f561">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#72f561">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#72f561">
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/tab_icon.png" />
+
+    <title>{% block title %}Home page{% endblock %}</title>
+
+    <link rel="stylesheet" href="/static/css/style.css"/>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="/static/fa/css/font-awesome.min.css"/>
+
+
+</head>
+
+<body>
+
+<main id="navfix" class="m-5">
+    <nav class="navabar_bgc py-0 navbar navbar-expand navbar-light fixed-top">
+
+        {% include 'sidebar.html' %}
+
+       <a href="/"><img class="img-fluid navbar__logo" src="/static/images/logo_shopstar.png" alt="ShopStar" /></a>
+
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav ml-auto mt-lg-0">
+                <li class="nav-item active">
+                    <a class="btn" href="{% url 'search' %}"><i class="fa fa-search" aria-hidden="true"></i></a>
+                </li>
+
+                <li class="nav-item mr-2">
+
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        
+                        <div class="nav__cart_total">
+                        <small class="m-0">
+                        {{cartItems}}
+                        </small>
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart4" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                                </svg>                        
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</main>
+  
+{% load google_translate %}
+
+<div class="modal fade" id="change_language" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select Language</h5>
+
+                <button type="button" class="btn-danger font-weight-bold" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+               <div class="text-center">{% google_translate type='vertical' language='en' %}</div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="block__content">
+{% block content %}
+{% endblock %}
+</div>
+
+<footer class="footer_cr">
+    
+    <a href="/"><img class="img-fluid m-3" src="/static/images/logo_shopstar.png" alt="ShopStar" width="250px" height="90px" /></a>
+
+        <div class="row container">
+            
+            <div class="col-md-5">
+                <hr />
+                <a href="{% url 'contact_us' %}" class="btn text-dark font-weight-bold" target="_blank">Contact Us</a><br>
+                <a href="{% url 'term_and_condition' %}" class="font-weight-bold btn text-dark" target="_blank">Terms and Condition</a><br>
+                <a href="{% url 'bug_report' %}" class="font-weight-bold btn text-dark" target="_blank">Bug report</a><br>
+                <a href="https://www.cashfree.com/privacypolicy.html" class="font-weight-bold btn text-dark" target="_blank">Payment Privacy Policy</a><br>
+                <a href="https://www.cashfree.com/tnc" class="font-weight-bold btn text-dark" target="_blank">Payment Terms & Condition</a><br>
+            </div>
+            <div class="col-md-4"><hr/>
+                <a data-toggle="modal" class="font-weight-bold btn text-dark"  data-target="#change_language">Change Language</a><br>
+                <a href="{% url 'privacy_policy' %}" class="font-weight-bold btn text-dark" target="_blank">Site Privacy and Policy</a><br>
+                <a href="{% url 'contact_us' %}" class="font-weight-bold btn text-dark" target="_blank">Feedback</a><br/>
+                <a href="{% url 'disclaimer' %}" class="font-weight-bold btn text-dark" target="_blank">Disclaimer</a><br>
+                <a href="{% url 'contact_us' %}" class="font-weight-bold btn text-dark" target="_blank">Help</a><br>
+            </div><br/><br/>
+
+            <div class="col-md-3"><hr />
+                <p>
+                    <i class="fa fa-check-circle-o fa-3x text-success px-2" aria-hidden="true"></i> <i class="fa-3x px-2 fa fa-shield text-warning"
+                        aria-hidden="true"></i> <i class="px-2 fa-3x fa fa-lock text-danger" aria-hidden="true"></i><br/><br/>
+                        <a target="_blank" href="https://www.paypal.com/"><img src="/static/images/PaypalLogo.jpg" width="100px" height="40px" alt="paypal" /></a>
+                        <a target="_blank" href="https://www.cashfree.com/"><img src="/static/images/cashfree_logo.png" width="100px" height="40px" alt="cashfree" /></a>
+                        <br /><br />
+                       <span style="color: rgb(88, 46, 38); font-style: italic; font-size: large;"><span style="font-size: 40px; font-weight: bolder; font-family: cursive;">W</span>e use above secure payment gateway.Your all payment credentials are secure.For more detail read <b>Payment Privacy Policy</b> and <b>Terms & Condition</b>...</span>
+                </p>
+            </div>
+        </div>
+            <hr/>
+            <div class="text-center">
+                <img src="/static/images/upi.jpg" class="my-2" width="150px" height="40px" alt="upi" />
+                <img src="/static/images/Rupay-Logo.jpg" class="my-2" width="120px" height="40px" alt="rupay" />
+                <img src="/static/images/visa.png" width="150px" height="40px" alt="visa" />
+                <img src="/static/images/net_banking.png" width="120px" height="40px" alt="net_banking" />
+            </div><br/>
+    <center class="pt-0"><small>Copyright © 2020 <b>shopstarofficial.herokuapp.com</b> All rights reserved.</small></center></p><br>
+    
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<!-- <script src="/static/javascript/jquery.min.js"></script>
+<script src="/static/javascript/popper.min.js"></script>
+<script src="/static/javascript/bootstrap.min.js"></script> -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+<script>
+    $('.sidebar__btn').click(function(){
+        $(this).toggleClass('click');
+        $('.sidebar').toggleClass('show');
+    })
+
+    $('.feat_btn').click(function () {
+        $('.submenu__show').toggleClass("show");
+        $('.first').toggleClass("rotate");
+    });
+    $('.srv_btn').click(function () {
+        $('.submenu__show1').toggleClass("show1");
+        $('.second').toggleClass("rotate");
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#txtSearch").autocomplete({
+            source: "/ajax_calls/search/",
+            minLength: 1,
+            open: function () {
+                setTimeout(function () {
+                    $('.ui-autocomplete').css('z-index', 99);
+                }, 0);
+            }
+        });
+    });
+</script>
+
+{% block script %}
+{% endblock script %}
+
+
+</body>
+</html>
+

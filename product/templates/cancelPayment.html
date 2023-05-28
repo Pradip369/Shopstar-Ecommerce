@@ -1,0 +1,16 @@
+{% extends "./base.html" %}
+
+{% block title %}cancelPayment{% endblock %}
+
+<div class="alert alert-danger mt-5">
+    <h2>Something went wrong!!!</h2>
+    <p>Your order payment cancel!!</p>
+    <p class="text-danger"><i class="fa fa-times-circle text-danger" aria-hidden="true"></i> Payment Verification Unsuccessful</p>
+    <strong>
+        If the amount is debited from your account, please inform us....
+        <a href="{% url 'contact_us' %}" class="py-0 px-3 btn btn-outline-warning">Contact us</a>
+    </strong>
+</div>
+
+{% block content %}
+{% endblock  %}

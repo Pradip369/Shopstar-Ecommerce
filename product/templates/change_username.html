@@ -1,0 +1,30 @@
+{% extends "./base.html" %}
+{% block title %}Change Username{% endblock %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<main class="pt-4">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <form method="POST" novalidate class="form-control profile_form">
+                    <h4 class="text-weight-bold text-center text-dark">Change
+                        Username</h4><hr/>
+
+                    {% csrf_token %}
+                    {{form | crispy}}
+                    <div class="text-center">
+                        <input type="submit" class="mt-2 btn btn-success border-dark btn-block btn-sm" value="Update" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<br><br>
+
+{% endblock %}

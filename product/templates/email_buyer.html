@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #8d8c8c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <center>
+        <h1
+            style="background-color: rgb(164, 226, 164); text-decoration: none; padding: 1px; font-family: cursive; font-weight: bolder;">
+            ShopStar</h1>
+    </center>
+    <hr />
+        
+    <h2>{{postData.orderNote}}</h2>
+
+    <table>
+        <tr>
+            <td>Order ID</td>
+            <td>{{postData.orderId}}</td>
+        </tr>
+        <tr>
+            <td>Order Amount</td>
+            <td>${{postData.orderAmount}}</td>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td>{{postData.orderNote}}</td>
+        </tr>
+        <tr>
+            <td>Address Information</td>
+            <td>{{shipping_info.house_no}},{{shipping_info.full_address}},Nr.{{shipping_info.nearest_landmark}},{{shipping_info.city}},{{shipping_info.state}},{{shipping_info.zipcode}},{{shipping_info.country.name}}
+            </td>
+        </tr>
+        <tr>
+            <td>Contact Number</td>
+            <td>{{postData.customerPhone}}</td>
+        </tr>
+        <tr>
+            <td>Contact Email</td>
+            <td>{{postData.customerEmail}}</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
